@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/rhernandog/react-comunas-selector.git/issues"
   },
-  "homepage": "https://github.com/rhernandog/react-comunas-selector.git#readme",
+  "homepage": "https://rhernandog.github.io/react-comunas-selector/",
   "dependencies": {
     "babel": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
