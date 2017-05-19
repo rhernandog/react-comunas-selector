@@ -108,7 +108,7 @@ gulp.task("min", ['production'], function(){
 		gulp.src("./build/js/app.js"),
 		uglify(),
 		rename("app.min.js"),
-		gulp.dest('./build/js/')
+		gulp.dest('./js/')
 	]);
 });
 
@@ -128,12 +128,12 @@ gulp.task("server", ["bundle"], function(){
 
 	bSync.init({
 		server:{
-			baseDir:["./build/", "../../"]
+			baseDir:["./", "../../"]
 		}
 	});
 
 	// watch
-	gulp.watch([ "./build/index.html", "./build/css/*.css", "./build/js/app.js" ], ["reload"]);
+	gulp.watch([ "./index.html", "./css/*.css", "./js/*.js" ], ["reload"]);
 
 });
 

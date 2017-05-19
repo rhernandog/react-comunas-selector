@@ -3,49 +3,67 @@ import React, { Component } from "react";
 import RegionesSelect from "./Regiones.jsx";
 import ComunasSelect from "./Comunas.jsx";
 
-class MainSelector extends Component{
+// get data
+import { comunas } from "../api/comunas";
 
-	constructor(props){
+class MainSelector extends Component {
+
+	constructor(props) {
 
 		super(props);
 
 		this.updateHandler = this.updateHandler.bind(this);
+		this.renderComunasSelector = this.renderComunasSelector.bind(this);
 
-		this.state = { region:null, selectedRegion:null, comuna:null, selectedComuna:null };
+		this.state = { region: null, selectedRegion: null, selectedComuna: null };
 
 	}
 
 	// method to update the main component state
 	// @param {srting}, t: the type of element selected
 	// @param {int}, v: the index of the selected item
-	updateHandler(t, v){
+	updateHandler(t, v) {
 
-		
-		if( t === "region" ){
+		if (t === "region") {
 			// update the selected region
 			this.setState({
-				region: v !== "" ? this.props.data[v] : null,
-				selectedRegion:v !== "" ? v : null,
-				comuna: null, selectedComuna:null
+				region: v !== "" ? comunas[v] : null,
+				selectedRegion: v !== "" ? v : null,
+				selectedComuna: null
 			});
 		} else {
 			this.setState({
-				comuna: v !== "" ? this.state.region.comunas[v] : null,
-				selectedComuna:v
+				selectedComuna: v
 			});
 		}
 
 	}
 
-	render(){
+	// method to render the comunas selector
+	// in case the "regiones" prop is passed in the main selector
+	// render just the regiones selector
+	renderComunasSelector() {
 		
-		return(
-			<div>
-				<RegionesSelect update={this.updateHandler} regiones={this.props.data} type="region" />
+		if (!this.props.regiones) {
+			return (
 				<ComunasSelect
 					update={this.updateHandler}
 					comunas={this.state.region !== null ? this.state.region.comunas : []}
-				type="comuna" />
+					type="comuna" />
+			);
+		}
+	}
+
+	render() {
+
+		return (
+			<div>
+				<RegionesSelect
+					update={this.updateHandler}
+					regiones={comunas}
+					type="region"
+				/>
+				{this.renderComunasSelector()}
 			</div>
 		);
 
