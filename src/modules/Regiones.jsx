@@ -17,12 +17,10 @@ class RegionesSelect extends Component{
 	valueChangeHandler(e){
 
 		const selection = e.target.value;
-		// if the value is not an empty string, update the state
-		if( selection !== "" ) {
-			this.setState({ value:selection });
-		} else {
-			this.setState({ value:"" });
-		}
+		const selectedRegion = selection !== "" ? this.props.regiones[selection].region : "";
+
+		// update the selected region
+		this.setState({ value: selectedRegion });
 
 		this.props.update(this.props.type, selection);
 

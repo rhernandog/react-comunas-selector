@@ -4,6 +4,9 @@
 var gulp = require("gulp");
 var util = require("gulp-util");
 var source = require("vinyl-source-stream");
+var path = require("path");
+var merge = require("merge-stream");
+var glob = require("glob");
 
 // uglify
 var uglify = require('gulp-uglify');
@@ -49,7 +52,7 @@ function build(){
 			util.log(e.message);
 		})
 		.pipe(source("app.js"))
-		.pipe(gulp.dest("./build/js/"))
+		.pipe(gulp.dest("./example/js/"))
 		.pipe( bSync.stream({once:true}) );
 
 }
@@ -60,6 +63,42 @@ bundled.on("update", build);
 gulp.task("bundle", function(){
 
 	return build();
+
+});
+
+
+
+
+
+
+
+/*
+*******************************************************************************************
+*		NPM BUILD TASK
+*******************************************************************************************
+*/
+// task to generate the lib folder files
+gulp.task("npmbuild", function(){
+
+	var files = glob.sync("./src/modules/*.jsx");
+	return merge(files.map(function(f){
+		
+		return browserify({
+			entries:f,
+			noParse: [require.resolve('react')],
+			transform: babel.configure({
+				presets: ["es2015", "react"],
+				plugins: []
+			})
+		})
+			.bundle()
+			.on("error", function (e) {
+				util.log(e.message);
+			})
+			.pipe( source( path.basename(f, ".jsx") + ".js" ) )
+			.pipe( gulp.dest("./lib/modules/") ); // browserify
+
+	})); // merge
 
 });
 
@@ -128,12 +167,12 @@ gulp.task("server", ["bundle"], function(){
 
 	bSync.init({
 		server:{
-			baseDir:["./build/", "../../"]
+			baseDir:["./example/", "../../"]
 		}
 	});
 
 	// watch
-	gulp.watch([ "./build/index.html", "./build/css/*.css", "./build/js/app.js" ], ["reload"]);
+	gulp.watch([ "./build/index.html", "./build/css/*.css", "./example/js/*.js" ], ["reload"]);
 
 });
 

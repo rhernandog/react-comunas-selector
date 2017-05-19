@@ -3,6 +3,9 @@ import React, { Component } from "react";
 import RegionesSelect from "./Regiones.jsx";
 import ComunasSelect from "./Comunas.jsx";
 
+// get data
+import { comunas } from "../api/comunas";
+
 class MainSelector extends Component{
 
 	constructor(props){
@@ -11,7 +14,7 @@ class MainSelector extends Component{
 
 		this.updateHandler = this.updateHandler.bind(this);
 
-		this.state = { region:null, selectedRegion:null, comuna:null, selectedComuna:null };
+		this.state = { region:null, selectedRegion:null, selectedComuna:null };
 
 	}
 
@@ -20,17 +23,15 @@ class MainSelector extends Component{
 	// @param {int}, v: the index of the selected item
 	updateHandler(t, v){
 
-		
 		if( t === "region" ){
 			// update the selected region
 			this.setState({
-				region: v !== "" ? this.props.data[v] : null,
+				region: v !== "" ? comunas[v] : null,
 				selectedRegion:v !== "" ? v : null,
-				comuna: null, selectedComuna:null
+				selectedComuna:null
 			});
 		} else {
 			this.setState({
-				comuna: v !== "" ? this.state.region.comunas[v] : null,
 				selectedComuna:v
 			});
 		}
@@ -41,7 +42,11 @@ class MainSelector extends Component{
 		
 		return(
 			<div>
-				<RegionesSelect update={this.updateHandler} regiones={this.props.data} type="region" />
+				<RegionesSelect
+					update={this.updateHandler}
+					regiones={comunas}
+					type="region"
+				/>
 				<ComunasSelect
 					update={this.updateHandler}
 					comunas={this.state.region !== null ? this.state.region.comunas : []}

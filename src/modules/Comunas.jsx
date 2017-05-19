@@ -13,10 +13,18 @@ class ComunasSelect extends Component{
 
 	}
 
+	componentDidUpdate(p,s) {
+		// if the component updates because the region changed
+		// set the value to an empty string
+		if( p.comunas.length !== this.props.comunas.length ) {
+			this.setState({ value:"" });
+		}
+	}
+
 	renderOption(e,i){
 		
 		return(
-			<option key={e.code} value={i}>{e.name}</option>
+			<option key={e.code} value={e.name}>{e.name}</option>
 		);
 	}
 
