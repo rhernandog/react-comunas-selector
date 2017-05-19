@@ -13,6 +13,7 @@ class MainSelector extends Component{
 		super(props);
 
 		this.updateHandler = this.updateHandler.bind(this);
+		this.renderComunasSelector = this.renderComunasSelector.bind(this);
 
 		this.state = { region:null, selectedRegion:null, selectedComuna:null };
 
@@ -38,6 +39,21 @@ class MainSelector extends Component{
 
 	}
 
+	// method to render the comunas selector
+	// in case the "regiones" prop is passed in the main selector
+	// render just the regiones selector
+	renderComunasSelector(){
+		console.log( this.props.regiones );
+		if( !this.props.regiones ) {
+			return(
+				<ComunasSelect
+					update={this.updateHandler}
+					comunas={this.state.region !== null ? this.state.region.comunas : []}
+					type="comuna" />
+			);
+		}
+	}
+
 	render(){
 		
 		return(
@@ -47,10 +63,7 @@ class MainSelector extends Component{
 					regiones={comunas}
 					type="region"
 				/>
-				<ComunasSelect
-					update={this.updateHandler}
-					comunas={this.state.region !== null ? this.state.region.comunas : []}
-				type="comuna" />
+				{this.renderComunasSelector()}
 			</div>
 		);
 
