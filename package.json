@@ -1,5 +1,5 @@
 {
-  "name": "comunas-selector-test",
+  "name": "react-comunas-selector",
   "version": "1.0.5",
   "description": "A startup kit to create React Apps with Gulp, Babel, Browserify and BrowserSync. More details on the github repository",
   "main": "./lib/index.js",
