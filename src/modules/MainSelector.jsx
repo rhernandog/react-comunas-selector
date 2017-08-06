@@ -43,7 +43,6 @@ class MainSelector extends Component{
 	// in case the "regiones" prop is passed in the main selector
 	// render just the regiones selector
 	renderComunasSelector(){
-		console.log( this.props.regiones );
 		if( !this.props.regiones ) {
 			return(
 				<ComunasSelect

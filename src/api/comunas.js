@@ -938,7 +938,7 @@ export const comunas = [
 				"code":"09105"
 			},
 			{
-				"name":"Galvarin",
+				"name":"Galvarino",
 				"code":"09106"
 			},
 			{
